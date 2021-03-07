@@ -12,7 +12,7 @@ canvas {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background: radial-gradient(circle, #fff 0%, #888 100%);
+	/*background: radial-gradient(circle, #fff 0%, #888 100%);*/
 }
 #shadow{
 	display: none;

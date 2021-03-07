@@ -55,7 +55,7 @@ function addShape(shape,s,o,C){
 		if ( false && is && os ){
 			C.bezierCurveTo( ax,ay,bx,by,cx,cy );
 		} else {
-			C.lineTo( cx,cy );
+			C.lineTo( cx,cy*-1 );
 		}
 	}
 	// C.closePath();
@@ -102,10 +102,13 @@ function render(){
 		var i=0, p;
 		setSZ( 595, 841 );
 		for( p in artObj ){
-			if ( i > 1 ){
-				break;
-			}
-			renderShape( artObj[p], [1,1], [0,841], C );
+			if ( i>1 ) break;
+			renderShape(
+				artObj[p],
+				[ 1, 1 ],
+				[ 0, 0 ],
+				C
+			);
 		}
 	});
 }
