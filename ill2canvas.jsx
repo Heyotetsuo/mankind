@@ -48,6 +48,7 @@
 			numToHexByte( rgb.red ) +
 			numToHexByte( rgb.green ) +
 			numToHexByte( rgb.blue )
+
 		);
 	}
 	function getColors( path ){
