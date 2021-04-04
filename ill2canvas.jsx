@@ -1,5 +1,5 @@
 (function(){
-	var logf,doc,data;
+	var round=Math.round,logf,doc,data,nth=1;
 	function getWorkDir(){ return app.activeDocument.path }
 	function printf(s,a){
 		var s2=s,i;
@@ -34,6 +34,13 @@
 		f.close();
 		f.parent.execute();
 	}
+	function arrRound( a ){
+		var b=[], i;
+		for( i=0; i<a.length; i++ ){
+			b.push( a[i].toFixed(nth) );
+		}
+		return b;
+	}
 	function arrDiff( a, b ){
 		var c=[], i;
 		for( i=0; i<a.length; i++ ){
@@ -41,14 +48,15 @@
 		}
 		return c;
 	}
-	function numToHexByte( n ){ return ( "00"+n.toString(16) ).slice(-2) }
+	function numToHexByte( n ){
+		return ( "00"+n.toString(16) ).slice(-2);
+	}
 	function rgbToHex( rgb ){
 		return String(
 			'#' +
 			numToHexByte( rgb.red ) +
 			numToHexByte( rgb.green ) +
 			numToHexByte( rgb.blue )
-
 		);
 	}
 	function getColors( path ){
@@ -87,6 +95,7 @@
 		var paths = layer.pathItems;
 		var data={}, sName="";
 		var colors, points, part, i, j;
+		var n = doc.width;
 		data.width = doc.width;
 		data.height = doc.height;
 		debugLog( (new Date()) + ": parsing paths..." );
@@ -96,15 +105,17 @@
 			points = paths[i].pathPoints;
 			part = { verts:[], ins:[], outs:[] };
 			for( j=0; j<points.length; j++ ){
-				part.verts.push( points[j].anchor );
-				part.ins.push( arrDiff(
+				part.verts.push( arrRound(
+					points[j].anchor
+				));
+				part.ins.push( arrRound( arrDiff(
 					points[j].leftDirection,
 					points[j].anchor
-				));
-				part.outs.push( arrDiff(
+				)));
+				part.outs.push( arrRound( arrDiff(
 					points[j].rightDirection,
 					points[j].anchor
-				));
+				)));
 			}
 			part.color = getColors( paths[i] );
 			if ( sName.length === 0 ){
